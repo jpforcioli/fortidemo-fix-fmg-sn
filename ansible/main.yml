@@ -1,0 +1,10 @@
+---
+- name: Fix FortiManager SN issue
+  connection: httpapi
+  hosts: FMG
+  collections:
+    - fortinet.fortimanager
+  
+  tasks:
+    - include_tasks: tasks/fpoc_login.yml
+    #- include_tasks: tasks/fpoc_get_managed_devices.yml

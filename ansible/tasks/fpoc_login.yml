@@ -1,0 +1,19 @@
+---
+- name: 'FPOC API - Login to FortiPoC'
+  uri:
+    url: '{{ fpoc_url_prefix }}/login'
+    validate_certs: false
+    body_format: json
+    method: post
+    body:
+      username: '{{ fpoc_username }}'
+      password: '{{ fpoc_password }}'
+  register: fpoc_session
+
+- name: 'ANSIBLE - Saving cookies'
+  set_fact:
+    fpoc_cookies: '{{ fpoc_session.cookies_string }}'
+
+#- name: DEBUG
+#  debug:
+#    msg: '{{ fpoc_cookies }}'

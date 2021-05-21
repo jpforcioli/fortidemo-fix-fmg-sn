@@ -1,0 +1,21 @@
+# Ansible variables
+#ansible_host: 192.168.100.120
+#ansible_httpapi_port: 443
+ansible_host: 35.246.144.3
+ansible_httpapi_port: 10407
+ansible_httpapi_use_ssl: true
+ansible_httpapi_validate_certs: false
+ansible_network_os: fortinet.fortimanager.fortimanager
+ansible_user: devops
+ansible_password: fortinet
+
+# FortiPoC variables
+#fpoc_ip: 192.168.100.254
+fpoc_ip: 35.246.144.3
+fpoc_url_prefix: https://{{ fpoc_ip }}/api/v0
+fpoc_username: admin
+fpoc_password: fabricadmin
+fpoc_fortigates: "Cloud-Gateway,HUB1,HUB2"
+
+# FortiManager variables
+fmg_adom: SD-WAN
