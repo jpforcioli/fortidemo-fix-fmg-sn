@@ -1,0 +1,4 @@
+---
+collections:
+  - name: fortinet.fortimanager
+    version: 2.0.3

@@ -121,19 +121,36 @@ Configure the devops instance
       mkdir collections
       ansible-galaxy collection install fortinet.fortimanager:==2.0.3 -p collections
       deactivate
+
+   .. note::
+
+      You can ignore the following warning message:
+      
+      .. code-block::
+      
+         [WARNING]: The specified collections path
+         '/fortipoc/fortidemo-fix-fmg-sn/ansible/collections' is not part of
+         the configured Ansible collections paths
+         '/root/.ansible/collections:/usr/share/ansible/collections'. The
+         installed collection won't be picked up in an Ansible run. 
       
 Playing the playbook
 ====================
 
 - Without debug:
 
-  .. coode-block:: shell
+  .. code-block:: shell
 
+     cd /fortipoc/fortidemo-fix-fmg-sn/ansible
+     source /fortipoc/.venv/bin/activate
      ansible-playbook -i inventory main.yml
+     deactivate
 
-- Witht debug:
+- With debug:
 
-     .. coode-block:: shell
-   
-        ansible-playbook -i inventory main.yml -e debug_enabled=true
+  .. code-block:: shell
 
+     cd /fortipoc/fortidemo-fix-fmg-sn/ansible
+     source /fortipoc/.venv/bin/activate
+     ansible-playbook -i inventory main.yml -e debug_enabled=true
+     deactivate
