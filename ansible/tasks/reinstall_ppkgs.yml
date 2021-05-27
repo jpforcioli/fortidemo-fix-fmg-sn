@@ -1,0 +1,25 @@
+---
+- name: FMG API - Re-install Policy Package {{ ppkg }}
+  fmgr_securityconsole_install_package:
+    securityconsole_install_package:
+      adom: "{{ fmg_adom }}"
+      flags:
+        - none
+      pkg: "{{ ppkg }}"
+  register: r
+
+- name: DEBUG
+  debug:
+    msg: "{{ r }}"
+  when: debug_enabled
+
+- name: FMG API - Wait for Policy Package Install of {{ ppkg }} to complete
+  fmgr_fact:
+    facts:
+      selector: "task_task"
+      params:
+        task: '{{r.meta.response_data.task}}'
+  register: taskinfo
+  until: taskinfo.meta.response_data.percent == 100
+  retries: 30
+  delay: 5

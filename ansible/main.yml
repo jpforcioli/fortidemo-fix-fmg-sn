@@ -6,5 +6,20 @@
     - fortinet.fortimanager
   
   tasks:
-    - include_tasks: tasks/fpoc_login.yml
-    #- include_tasks: tasks/fpoc_get_managed_devices.yml
+    - name: Login to FortiPoC
+      include_tasks: tasks/fpoc_login.yml
+
+    - name: Get Managed Devices Serial Number
+      include_tasks: tasks/fpoc_get_managed_devices_sn.yml
+
+    - name: Fix SN in FMG
+      include_tasks: tasks/fmg_fix_sn.yml
+      loop: "{{ final }}"
+      loop_control:
+        loop_var: device
+
+    - name: Re-install Policy Packages for all devices except the FAZ
+      include_tasks: tasks/reinstall_ppkgs.yml
+      loop: "{{ fmg_ppkgs }}"
+      loop_control:
+        loop_var: ppkg

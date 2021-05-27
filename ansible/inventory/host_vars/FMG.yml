@@ -1,21 +1,39 @@
-# Ansible variables
-#ansible_host: 192.168.100.120
-#ansible_httpapi_port: 443
-ansible_host: 35.246.144.3
-ansible_httpapi_port: 10407
+# ANSIBLE VARIABLES
+ansible_host: 192.168.100.120
+ansible_httpapi_port: 443
 ansible_httpapi_use_ssl: true
 ansible_httpapi_validate_certs: false
 ansible_network_os: fortinet.fortimanager.fortimanager
 ansible_user: devops
 ansible_password: fortinet
 
-# FortiPoC variables
+# FORTIPOC VARIABLES
 #fpoc_ip: 192.168.100.254
 fpoc_ip: 35.246.144.3
-fpoc_url_prefix: https://{{ fpoc_ip }}/api/v0
+fpoc_url_prefix: https://{{ fpoc_ip }}/api
 fpoc_username: admin
 fpoc_password: fabricadmin
-fpoc_fortigates: "Cloud-Gateway,HUB1,HUB2"
 
-# FortiManager variables
+# FORTIMANAGER VARIABLES
+## ADOM name
 fmg_adom: SD-WAN
+## FGT credentials (will be used for the reclaim-dev-tunnel) 
+fgfm_admin: admin
+fgfm_password: fortinet
+## Names mapping: FPOC to FMG name
+fmg_mapping:
+  FAZ: FAZ
+  Spoke1: Branch1
+  Spoke2: Branch2
+  Cloud-Gateway: Cloud-Gateway
+  HUB1: HUB1
+  HUB2: HUB2
+## Policy Packages to re-install once SN are updated.
+fmg_ppkgs:
+  - Branch
+  - Cloud
+  - HUB
+
+# Other variables
+##  Debug: disabled by default
+debug_enabled: false
