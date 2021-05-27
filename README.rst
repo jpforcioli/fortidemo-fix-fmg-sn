@@ -95,42 +95,32 @@ Configure the devops instance
 2. Create a python3 virtual environment
 
    .. code-block:: shell
+
       apt update
+      apt install git --yes
       apt install python3-venv --yes
       python3 -m venv /fortipoc/.venv
 
-
-
-1. Clone *fortidemo-fix-fmg-sn* project
+3. Get the *fortidemo-fmg-fix-sn* repository
 
    .. code-block:: shell
 
-      mkdir /fortipoc
       cd /fortipoc
       git clone https://github.com/jpforcioli/fortidemo-fix-fmg-sn.git
-
-2. Create a python virtual environment
-
-   .. code-block:: shell
-
-      cd /fortipoc/fortidemo-fix-fmg-sn
-      python3 -m venv .venv
-      source .venv/bin/activate
-   
-3. Install the pre-requisites packages
-
-   .. code-block:: shell
-
-      cd /fortipoc/fortidemo-fix-fmg-sn   
+      cd fortidemo-fix-fmg-sn
+      source /fortipoc/.venv/bin/activate
       pip3 install -r requirements.txt
-      
-4. Install the fortimanager galaxy collection
+      deactivate
+
+4. Get the FortiManager ansible galaxy collection
 
    .. code-block:: shell
- 
-      mkdir -p /fortipoc/ansible/collections
-      cd /fortipoc/ansible
+     
+      cd /fortipoc/fortidemo-fix-fmg-sn/ansible
+      source /fortipoc/.venv/bin/activate
+      mkdir collections
       ansible-galaxy collection install fortinet.fortimanager:==2.0.3 -p collections
+      deactivate
       
 Playing the playbook
 ====================
