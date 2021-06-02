@@ -139,7 +139,7 @@ Configure the devops instance
         echo "Fix FMG SN..." &>> ${log_file}
 
         source ${base_dir}/.venv/bin/activate
-        cd ${base_dir}/ansible
+        cd ${ansible_dir}
         ansible-playbook -i inventory main.yml -e debug_enabled=true &>> ${log_file}
         deactivate
 
