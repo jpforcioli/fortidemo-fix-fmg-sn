@@ -107,6 +107,7 @@ Configure the devops instance
       git clone https://github.com/jpforcioli/fortidemo-fix-fmg-sn.git
       cd fortidemo-fix-fmg-sn
       source /fortipoc/.venv/bin/activate
+      pip3 install pip --upgrade
       pip3 install -r requirements.txt
       deactivate
 
