@@ -132,7 +132,89 @@ Configure the devops instance
          the configured Ansible collections paths
          '/root/.ansible/collections:/usr/share/ansible/collections'. The
          installed collection won't be picked up in an Ansible run. 
-      
+
+5. Create the *postinst* infrastructure
+
+   - Create folder ``/fortipoc/postinst.d``
+
+     .. code-block:: shell
+
+        mkdir /fortipoc/postinst.d
+
+   - Create file ``/fortipoc/postinst.d/10_pause``
+
+     .. code-block:: shell
+
+        vi /fortipoc/postinst.d/10_pause
+
+     Use following content:
+
+     .. code-block:: shell
+
+        #! /bin/bash                                                                                                                                    
+                                                                                                                                                
+        n_minutes=20
+        n_seconds=$((n_minutes * 60))
+
+        echo "Pausing for ${n_seconds}..." &>> ${log_file}
+        for i in $(seq 1 ${n_seconds});
+        do
+            echo "Iteration ${i}/${n_seconds}" &>> ${log_file}
+        done
+
+   - Create file ``/fortipoc/postinst.d/20_fmg_fix_sn``
+
+     .. code-block:: shell
+
+        vi /fortipoc/postinst.d/20_fmg_fix_sn
+
+     Use following content:
+
+     .. code-block:: shell
+
+        #! /bin/bash
+        
+        echo "Fix FMG SN..." &>> ${log_file}
+
+        source ${base_dir}/.venv/bin/activate
+        cd ${base_dir}/ansible
+        ansible-playbook -i inventory main.yml -e debug_enabled=true &>> ${log_file}
+        deactivate
+
+   - Make all ``postinst.d`` files executable
+
+     .. code-block:: shell
+
+        chmod -R +x /fortipoc/postinst.d
+
+   - Create file ``/fortipoc/postinst``
+
+     .. code-block:: shell
+
+        vi /fortipoc/postinst
+
+     Use following content:
+
+     .. code-block:: shell
+
+        #! /bin/bash
+
+        export base_dir=/fortipoc
+        export log_file=${base_dir}/log_$(date +'%Y%m%d-%H%M%S')
+        
+        echo "Capturing postinst stdout/stderr"  &>> ${log_file} 
+
+        run-parts --verbose --exit-on-error /fortipoc/postinst.d
+
+        chmod -R 755 ${base_dir}
+
+6. Backup the ``devops`` configuration
+
+   From FortiPoC GUI:
+
+   - Power-off the ``devops`` instance
+   - Save configuration as ``devops.conf``
+   
 Playing the playbook
 ====================
 
