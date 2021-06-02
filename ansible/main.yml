@@ -12,6 +12,9 @@
     - name: Get Managed Devices Serial Number
       include_tasks: tasks/fpoc_get_managed_devices_sn.yml
 
+    - name: Logout from FortiPoC
+      include_tasks: tasks/fpoc_logout.yml
+
     - name: Fix SN in FMG
       include_tasks: tasks/fmg_fix_sn.yml
       loop: "{{ final }}"

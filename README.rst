@@ -8,7 +8,6 @@ Prepare the FortiAnalyzer
       config system interface
       edit port3
       set ip 10.100.88.2/24
-      next 
       end
 
    .. note::
@@ -26,7 +25,6 @@ Prepare the FortiManager
       config system interface
       edit port3
       set ip 10.100.55.12/24
-      next
       end
 
    .. note::
@@ -119,7 +117,7 @@ Configure the devops instance
       cd /fortipoc/fortidemo-fix-fmg-sn/ansible
       source /fortipoc/.venv/bin/activate
       mkdir collections
-      ansible-galaxy collection install fortinet.fortimanager:==2.0.3 -p collections
+      ansible-galaxy collection install -r requirements.yml -p collections
       deactivate
 
    .. note::
