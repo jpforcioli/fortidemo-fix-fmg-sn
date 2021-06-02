@@ -162,6 +162,7 @@ Configure the devops instance
         #! /bin/bash
 
         export base_dir=/fortipoc
+        export ansible_dir = ${base_dir}/fortidemo-fix-fmg-sn/ansible
         export log_file=${base_dir}/log_$(date +'%Y%m%d-%H%M%S')
         
         echo "Capturing postinst stdout/stderr" &>> ${log_file} 
