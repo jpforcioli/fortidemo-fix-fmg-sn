@@ -1,7 +1,7 @@
 ---
 - name: FPOC API - Logout from FortiPoC
   uri:
-    method: post
+    method: get
     url: "{{ fpoc_url_prefix }}/v0/logout"
     validate_certs: false
     headers:
