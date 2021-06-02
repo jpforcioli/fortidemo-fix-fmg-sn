@@ -164,7 +164,7 @@ Configure the devops instance
         export base_dir=/fortipoc
         export log_file=${base_dir}/log_$(date +'%Y%m%d-%H%M%S')
         
-        echo "Capturing postinst stdout/stderr"  &>> ${log_file} 
+        echo "Capturing postinst stdout/stderr" &>> ${log_file} 
 
         run-parts --verbose --exit-on-error /fortipoc/postinst.d
 
