@@ -122,6 +122,7 @@ Configure the devops instance
         for i in $(seq 1 ${n_seconds});
         do
             echo "Iteration ${i}/${n_seconds}" &>> ${log_file}
+            sleep 1
         done
 
    - Create file ``/fortipoc/postinst.d/20_fmg_fix_sn``
