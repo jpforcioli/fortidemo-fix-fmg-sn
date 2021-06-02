@@ -1,37 +1,7 @@
-Prepare the FortiAnalyzer
-=========================
-
-1. Fix the license issue
-
-   .. code-block::
-
-      config system interface
-      edit port3
-      set ip 10.100.88.2/24
-      end
-
-   .. note::
-       
-      FortiAnalyzer will ask you to reboot; please confirm.
-
-
 Prepare the FortiManager
 ========================
 
-1. Fix the license issue
-
-   .. code-block::
-
-      config system interface
-      edit port3
-      set ip 10.100.55.12/24
-      end
-
-   .. note::
-       
-      FortiManager will ask you to reboot; please confirm.
-
-2. Create a dedicated ``devops`` user:
+1. Create a dedicated ``devops`` user:
 
    .. code-block::
 
@@ -46,14 +16,6 @@ Prepare the FortiManager
       next
       end
 
-3. Turn off offline mode
-
-   .. code-block::
-
-      config system admin setting 
-      set offline_mode disable 
-      end
-    
 Create the devops instance
 ==========================
 
