@@ -8,8 +8,7 @@ ansible_user: devops
 ansible_password: fortinet
 
 # FORTIPOC VARIABLES
-#fpoc_ip: 192.168.100.254
-fpoc_ip: 35.246.144.3
+fpoc_ip: 192.168.100.254
 fpoc_url_prefix: https://{{ fpoc_ip }}/api
 fpoc_username: admin
 fpoc_password: fabricadmin
