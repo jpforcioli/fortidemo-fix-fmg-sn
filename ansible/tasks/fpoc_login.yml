@@ -9,12 +9,15 @@
       username: "{{ fpoc_username }}"
       password: "{{ fpoc_password }}"
   register: fpoc_session
+  tags: debug
 
 - name: ANSIBLE - Saving cookies
   set_fact:
     fpoc_cookies: "{{ fpoc_session.cookies_string }}"
+  tags: debug
 
 - name: DEBUG
   debug:
     msg: "{{ fpoc_cookies }}"
   when: debug_enabled
+  tags: debug

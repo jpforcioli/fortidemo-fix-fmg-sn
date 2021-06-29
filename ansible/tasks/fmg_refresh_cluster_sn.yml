@@ -1,0 +1,57 @@
+---
+- name: FMG API - Refresh SN for cluster {{ fgt_primary_name }}
+  fmgr_dvm_cmd_update_device:
+    dvm_cmd_update_device:
+      adom: "{{ fmg_adom }}"
+      device: "{{ fgt_primary_name }}"
+      flags:
+        - create_task
+        - nonblocking
+  register: r
+  tags: debug
+
+- name: FMG API - Wait for the Refresh SN task to complete
+  fmgr_fact:
+    facts:
+      selector: "task_task"
+      params:
+        task: '{{r.meta.response_data.taskid}}'
+  register: taskinfo
+  until: taskinfo.meta.response_data.percent == 100
+  retries: 30
+  delay: 5
+  tags: debug
+
+- name: ANSIBLE - Get SNs for FGT primary & secondary members
+  set_fact:
+    sn_primary: "{{ final | json_query(query1) }}"
+    sn_secondary: "{{ final | json_query(query2) }}"    
+  vars:
+    query1: "[*] | [?[0]=='{{ fgt_primary_name }}'] | [0][1]"
+    query2: "[*] | [?[0]=='{{ fgt_secondary_name }}'] | [0][1]"    
+  tags: debug
+
+- name: DEBUG
+  debug:
+    msg: "FGT PRIMARY SN: [{{ sn_primary }}], FGT SECONDARY SN: [{{ sn_secondary }}]"
+  when: debug_enabled        
+  tags: debug
+
+- name: FMG API - Update ha_slave for cluster {{ fgt_primary_name }}
+  fmgr_generic:
+    method: exec
+    params:
+      - url: /dvm/cmd/update/ha
+        data:
+          name: "{{ fgt_primary_name }}"
+          ha_mode: AP
+          ha_group_name: "{{ fgt_ha_group_name }}"
+          ha_slave: 
+            - idx: 0
+              name: "{{ fgt_primary_name }}"
+              role: master
+              sn: "{{ sn_primary }}"
+            - idx: 1
+              name: "{{ fgt_secondary_name }}"
+              role: slave
+              sn: "{{ sn_secondary }}"

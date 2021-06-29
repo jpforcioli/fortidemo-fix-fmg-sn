@@ -6,3 +6,4 @@
     validate_certs: false
     headers:
       Cookie: "{{ fpoc_cookies }}"
+  tags: debug

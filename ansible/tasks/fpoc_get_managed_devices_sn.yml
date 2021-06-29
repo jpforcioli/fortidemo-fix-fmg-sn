@@ -2,11 +2,13 @@
 - name: ANSIBLE - Building list of FortiPoC device names
   set_fact:
     fpoc_names: "{{ fmg_mapping.keys() | join(',') }}"
+  tags: debug    
 
 - name: DEBUG
   debug:
     msg: "{{ fpoc_names }}"
   when: debug_enabled
+  tags: debug
 
 - name: FPOC API - Get list of managed devices {{ fpoc_names }}
   uri:
@@ -16,23 +18,34 @@
     headers:
       Cookie: "{{ fpoc_cookies }}"
   register: fpoc_devices      
+  tags: debug
+
+- name: DEBUG
+  debug:
+    msg: "{{ fpoc_devices }}"   
+  when: debug_enabled       
+  tags: debug
 
 - name: ANSIBLE - Build temporary list of FPOC devices & their corresponding SN
   set_fact: 
     temp: "{{ fpoc_devices.json.devices | json_query('*.[name, license.id ]') }}"
+  tags: debug
 
 - name: DEBUG
   debug:
     msg: "{{ temp }}"   
   when: debug_enabled      
+  tags: debug
 
-- name: ANSIBLE - Build definitive list of FMG managed devices & their corresponding SN
+- name: ANSIBLE - Build final list of FMG managed devices & their corresponding SN
   set_fact:
 #    final: "{{ final | default([]) + [fpoc_to_fmg_names[item[0]], item[1].split('.')[0]] }}"
     final: "{{ final | default([]) + [[fmg_mapping[item[0]], item[1].split('.')[0]]] }}"
   loop: "{{ temp }}"  
+  tags: debug
 
 - name: DEBUG
   debug:
     msg: "{{ final }}" 
   when: debug_enabled    
+  tags: debug

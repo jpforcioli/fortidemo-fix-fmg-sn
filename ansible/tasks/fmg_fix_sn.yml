@@ -7,6 +7,7 @@
       - -20010
     dvmdb_device_replace_sn:
       sn: "{{ device[1] }}"
+  when: device[0] != fgt_secondary_name
 
 - name: FMG API - Update FGFM credentials for device {{ device[0] }}
   fmgr_dvmdb_device:
@@ -15,10 +16,12 @@
     dvmdb_device:
       adm_usr: "{{ fgfm_admin }}"
       adm_pass: "{{ fgfm_password }}"
-  
+  when: device[0] != fgt_secondary_name
+
 - name: FMG API - Update FMG SN for device {{ device[0] }}
   fmgr_exec_fgfm_reclaimdevtunnel:
     device_name: "{{ device[0] }}"
     exec_fgfm_reclaimdevtunnel:
       flags:
-        - force
+        - force 
+  when: device[0] != fgt_secondary_name       

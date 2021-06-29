@@ -15,18 +15,23 @@ fpoc_password: fabricadmin
 
 # FORTIMANAGER VARIABLES
 ## ADOM name
-fmg_adom: SD-WAN
+fmg_adom: SDWAN 
 ## FGT credentials (will be used for the reclaim-dev-tunnel) 
 fgfm_admin: admin
 fgfm_password: fortinet
 ## Names mapping: FPOC to FMG name
 fmg_mapping:
-  FAZ: FAZ
+  #FAZ: FAZ
   Branch1: Branch1
   Branch2: Branch2
   Cloud-Gateway: Cloud-Gateway
   HUB1: HUB1
+  HUB1-2: HUB1-2
   HUB2: HUB2
+## FGT Cluster  
+fgt_primary_name: HUB1
+fgt_secondary_name: HUB1-2
+fgt_ha_group_name: hub1-cluster
 ## Policy Packages to re-install once SN are updated.
 fmg_ppkgs:
   - Branch
