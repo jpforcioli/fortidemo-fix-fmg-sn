@@ -39,5 +39,5 @@ fmg_ppkgs:
   - HUB
 
 # Other variables
-##  Debug: disabled by default
+##  DEBUG: disabled by default
 debug_enabled: false
